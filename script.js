@@ -53,12 +53,8 @@ function performBasicOp() {
       total = mult(total, parseFloat(lastNumber));
     } else if (op == "/") {
         total = divide(total, parseFloat(lastNumber));
-    } else if (op == '10x') {
-        total = multiply(total, parseFloat(lastNumber));
-    } else if (op == '^') {
+    }  else if (op == '^') {
         total = pow(total, parseFloat(lastNumber));
-    } else if (op == '1/x') {
-        total = divNum(total, parseFloat(lastNumber)); 
     } else {
       total = parseFloat(lastNumber);
     }
@@ -77,14 +73,22 @@ function mult(num1, num2) {
 function divide(num1, num2) {
     return num1 == 0 ? 0 : num1 / num2;
 }
-function multiply (num) {
-    return 10 ** num;
-}
-function pow (num1, num2) {
+function pow(num1, num2) {
     return num1 ** num2;
 }
-function divNum (num) {
-    return 1 / num;
+
+function powerOf() {
+    current.textContent = `10^(${output.textContent})`;
+    output.textContent = 10 ** parseFloat(current.textContent);
+    total = parseFloat(output.textContent);
+    isNewEntry = true;
+}
+
+function recip() {
+    current.textContent = `1/(${current.textContent})`;
+    output.textContent = 1 / parseFloat(lastNumber);
+    total = parseFloat(output.textContent);
+    isNewEntry = true;
 }
 
 const equal = document.querySelector('.equal');
@@ -138,7 +142,6 @@ sqrt.addEventListener('click', () => {
     total = parseFloat(output.textContent);
     isNewEntry = true;
 });
-
 
 
 
