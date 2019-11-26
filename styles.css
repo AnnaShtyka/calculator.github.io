@@ -8,7 +8,7 @@ body{
 }
 
 
-.container {
+.container{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -18,7 +18,7 @@ body{
     padding: 5px;
 }
 
-#result{
+.result{
     margin-top: 10px;
     border-radius: 3px;
     border: 1px solid rgba(39, 17, 235, 0.329);
@@ -49,21 +49,6 @@ body{
     font-size: 25px;
     color: black;
 }
-    
-#display{
-    border: 1px solid rgba(39, 17, 235, 0.329);
-    border-radius: 3px;
-    width: 16.5rem;
-    height: 85px;
-    text-align: right;
-    margin: 5px;
-    padding: 3px;
-    font-size: 32px;
-    color: black;
-    background: transparent;
-    box-shadow: inset 0px -1px 2px #bbd3d2;
-    background-image: linear-gradient( rgba(255, 255, 255, 0.123), rgba(252, 249, 249, 0.9)  );
-}
 
 .keyboard {
     display: flex;
@@ -72,7 +57,7 @@ body{
     margin: 5px;
 }
 
-button, .operator{
+button, .ops{
     border-radius: 3px;
     margin: 4px;
     width: 63px;
@@ -88,6 +73,8 @@ button, .operator{
     width: 8.4rem;
 }
 
-.equal {
+#equal {
     width: 8.4rem;
 }
+
+
