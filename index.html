@@ -9,15 +9,14 @@
 </head>
 <body>
     <div class="container">
-        <div id="result">
-            <div class="display-current" type="expression"></div>
-            <div class="display-output" type="screen"></div> 
+        <div class="result">
+            <input class="display-current" value="">
+            <input class="display-output" value="">   
         </div>
-
         <div class="keyboard">
-            <button onclick="powerOf.call(this)">10<sup>x</sup></button>
-            <button class="op">^</button>
-            <button onclick="recip.call(this)">1/x</button>
+            <button onclick="powerOf()">10<sup>x</sup></button>
+            <button class="ops" onclick="pow()">^</button>
+            <button onclick="recip()">1/x</button>
             <button class="sign">&#177</button>
 
             <button class="backspace">&#8592</button>
@@ -25,33 +24,31 @@
             <button class="clearScreen">C</button>
             <button class="sqrt">&#8730</button>
 
-            <button class="number" data-num="7">7</button>
-            <button class="number" data-num="8">8</button>
-            <button class="number" data-num="9">9</button>
-            <button class="op">/</button>
-            
-            
-            <button class="number" data-num="4">4</button>
-            <button class="number" data-num="5">5</button>
-            <button class="number" data-num="6">6</button>
-            <button class="op">*</button>
-            
-            
+            <button class="num" data-num="7" type="button">7</button>
+            <button class="num" data-num="8" type="button">8</button>
+            <button class="num" data-num="9" type="button">9</button>
+            <button class="ops" type="button" >/</button>
 
-            <button class="number" data-num="1">1</button>
-            <button class="number" data-num="2">2</button>
-            <button class="number" data-num="3">3</button>
-            <button class="op">-</button> 
-            
-            
-            <button class="op">(</button>
-            <button class="op">)</button>
-            <button class="number">.</button>
-            <button class="op">+</button>
+            <button class="num" data-num="4" type="button">4</button>
+            <button class="num" data-num="5" type="button">5</button>
+            <button class="num" data-num="6" type="button">6</button>
+            <button class="ops" type="button">*</button>
 
-            <button class="number" id="zero">0</button>
-            <button class="equal">=</button>
+            <button class="num" data-num="1" type="button">1</button>
+            <button class="num" data-num="2" type="button">2</button>
+            <button class="num" data-num="3" type="button">3</button>
+            <button class="ops" type="button">-</button>
+
+            <button class="bracket">(</button>
+            <button class="bracket">)</button>
+            <button class="num">.</button>
+            <button class="ops">+</button>
+
+            <button class="num" id="zero" type="button">0</button>
+            <button class="ops" id='equal' type="button">=</button>
+        </div>
     </div>
-    <script defer src="script.js"></script>
+
+    <script src="script.js"></script>
 </body>
 </html>
