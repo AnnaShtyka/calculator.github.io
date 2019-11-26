@@ -1,146 +1,114 @@
-const current = document.querySelector('.display-current'); 
-const output = document.querySelector('.display-output'); 
-const numbers = document.querySelectorAll('.number');
-const operators = document.querySelectorAll('.op');
+const keyboard = document.querySelector('.keyboard');
+const resultBtn = document.getElementById("equal");
+const current = document.querySelector(".display-current");
+const output = document.querySelector(".display-output");
+const backSpace = document.querySelector('.backspace');
+const clearNumber = document.querySelector('.clearNumber');
+const clearScreen = document.querySelector('.clearScreen');
+const sqrt = document.querySelector('.sqrt');
+const sign = document.querySelector('.sign');
 
-let total = 0;
-let lastNumber = 0;
+let curNum = 0;
+let newNum = false; 
 let op = "";
-let isNewEntry = true;
-let isNewCurrent = false;
 
-numbers.forEach(number =>
-    number.addEventListener("click", function() {
-      addTextToScreen(this);
-    })
-  );
-  
-function addTextToScreen(numberElement) {
-    lastNumber = "";
-        if (isNewCurrent) {
-            current.textContent = "";
-            isNewCurrent = false;
-        } else {
-            output.textContent += numberElement.textContent.trim();
-            current.textContent += numberElement.textContent.trim();
-            isNewEntry = false;
-        }
-    lastNumber = output.textContent.trim();
-}
 
-operators.forEach(op =>
-    op.addEventListener("click", function() {
-      storeLastNumber(this);
-    })
-  );
-  function storeLastNumber(operatorElement) {
-    if (!isNewEntry) {
-      total = parseFloat(lastNumber);
-      lastNumber = "";
+keyboard.addEventListener('click', function(e) {
+    if (e.target.className == 'num') {
+        addNumToScreen(e.target.textContent);
+    } if (e.target.className == 'ops') {
+        operation(e.srcElement.textContent);
     }
-    output.textContent = "";
-    op = operatorElement.textContent.trim();
-    current.textContent += op;  
-    isNewCurrent = false;
-}
+});
 
-function performBasicOp() {
-    if (op == "+") {
-      total = add(total, parseFloat(lastNumber));
-    } else if (op == "-") {
-      total = sub(total, parseFloat(lastNumber));
-    } else if (op == "*") {
-      total = mult(total, parseFloat(lastNumber));
-    } else if (op == "/") {
-        total = divide(total, parseFloat(lastNumber));
-    }  else if (op == '^') {
-        total = pow(total, parseFloat(lastNumber));
+function addNumToScreen(number) {
+    current.value += number;
+    if(newNum) {
+        current.value = number;
+        newNum = false;
+    } 
+};
+
+function operation (operator) {
+    let localOp = current.value;
+    if (newNum && op !== "=") {
+        current.value = curNum;
     } else {
-      total = parseFloat(lastNumber);
-    }
-    return total;
+        newNum = true;
+        if (op == "+") {
+            curNum += parseFloat(localOp);
+        } else if (op == "-") {
+            curNum -= parseFloat(localOp);
+        } else if (op == "*") {
+            curNum *= parseFloat(localOp);
+        } else if (op == "/") {
+            curNum /= parseFloat(localOp);
+        }else {
+            curNum = parseFloat(localOp);
+        };
+        output.value = curNum;
+        op = operator;
+    };
+    output.value = curNum;
+};
+
+function pow() {
+    curNum = current.value;
+    output.value = Math.pow(parseFloat(curNum), parseFloat(current.value) )
+    newNum = true;
 }
 
-function add(num1, num2) {
-    return num1 + num2;
-}
-function sub(num1, num2) {
-    return num1 - num2;
-}
-function mult(num1, num2) {
-    return num1 * num2;
-}
-function divide(num1, num2) {
-    return num1 == 0 ? 0 : num1 / num2;
-}
-function pow(num1, num2) {
-    return num1 ** num2;
-}
 
 function powerOf() {
-    current.textContent = `10^(${output.textContent})`;
-    output.textContent = 10 ** parseFloat(current.textContent);
-    total = parseFloat(output.textContent);
-    isNewEntry = true;
+    curNum = current.value;
+    current.value = `10^(${curNum})`;
+    output.value = 10 ** parseFloat(curNum);
 }
 
 function recip() {
-    current.textContent = `1/(${current.textContent})`;
-    output.textContent = 1 / parseFloat(lastNumber);
-    total = parseFloat(output.textContent);
-    isNewEntry = true;
+    curNum = current.value;
+    current.value = `1/(${curNum})`;
+    output.value = 1 / parseFloat(curNum);
 }
 
-const equal = document.querySelector('.equal');
-equal.addEventListener('click', equals);
-function equals(equalElement) {
-    equalElement = equalElement || this;
-    output.textContent = "";
-    let value = performBasicOp();
-    output.textContent = value;
-    isNewEntry = true;
-    isNewCurrent = true;
-}
-
-const backSpace = document.querySelector('.backspace');
-backSpace.addEventListener('click', () => {
-    current.textContent = current.textContent.slice(0, current.textContent.length - 1);
-    total = parseFloat(current.textContent);
-    output.textContent = "";
-    isNewEntry = true;
-});
-
-const clearNumber = document.querySelector('.clearNumber');
-clearNumber.addEventListener('click', () => {
-    output.textContent = output.textContent.slice(0, output.textContent.length - 1);
-    total = parseFloat(output.textContent);
-    isNewEntry = true;
-});
-
-const clearScreen = document.querySelector('.clearScreen');
-clearScreen.addEventListener('click', () => {
-    total = 0;
-    lastNumber = 0;
-    op = "";
-    isNewEntry = true;
-    output.textContent = "";
-    current.textContent = "";
-});
-
-const sign = document.querySelector('.sign');
 sign.addEventListener('click', () => {
-    if (current.textContent.substring(0, 1) == "-") {
-            current.textContent = current.textContent.substring(1, expression.textContent.length)
+    if (current.value.substring(0, 1) == "-") {
+            current.value = current.value.substring(1, current.value.length)
     } else {
-        current.textContent = "-" + current.textContent;
+        current.value = "-" + current.value;
     }
 });
 
-const sqrt = document.querySelector('.sqrt');
+function clear() {
+    current.value = "";
+    newNum = true;
+    curNum = 0;
+    memoryOperation = "";
+};
+
+backSpace.addEventListener('click', () => {
+    current.value = current.value.slice(0, current.value.length - 1);
+    output.value = "";
+    newNum = true;
+});
+
+clearNumber.addEventListener('click', () => {
+    output.value = output.value.slice(0, output.value.length - 1);
+    newNum = true;
+});
+
+clearScreen.addEventListener('click', () => {
+    curNum = 0;
+    memoryOperation = "";
+    newNum = true;
+    output.value = "";
+    current.value = "";
+});
+
 sqrt.addEventListener('click', () => {
-    output.textContent = Math.sqrt(parseFloat(output.textContent));
-    total = parseFloat(output.textContent);
-    isNewEntry = true;
+    curNum = current.value;
+    output.value = Math.sqrt(parseFloat(curNum));
+    newNum = true;
 });
 
 
